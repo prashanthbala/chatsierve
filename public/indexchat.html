@@ -49,7 +49,9 @@
 					var message = $('#messageText').val();
 		            socket.emit('message', message);
 					$('#messages')
-					.append('<li>' + now.toTimeString() + ' - ' + message + '</li>');
+					.append('<li>' + now.toTimeString() + ' - ' + message + '</li>').hide();
+					$("#messages").slideUp();
+					$('#messages').show("slow");
 		            $('#messageText').val('');
 				}
 			});
