@@ -1,0 +1,47 @@
+<html>
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		
+		<title>SOCKETS TEST</title>
+		
+		<script src="/socket.io/socket.io.js" type="text/javascript" charset="utf-8">
+		</script>
+		<script type="text/javascript" charset="utf-8">
+			 var socket = io.connect('http://192.168.1.76:9231');
+			 socket.on('news', function (data) {
+			    document.getElementById("demo").Ω=JSON.stringify(data);
+				var now = new Date();
+				
+				var OSName="Unknown OS";
+				if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+				if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+				if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+				if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+				
+			    socket.emit('delivered', { 	serverosname: OSName,
+											time : now.toTimeString() 
+										 } );
+			 });
+		</script>
+		
+	</head>
+	
+	<body id="index">
+		
+		<p id="demo"> So wattup?? </p> 	
+		
+		<FORM action="http://192.168.1.76:9231/" method="post">
+	    <P>
+	    First name: <INPUT type="text" name="firstname"><BR>
+	    Last name: <INPUT type="text" name="lastname"><BR>
+	    email: <INPUT type="text" name="email"><BR>
+	    <INPUT type="radio" name="sex" value="Male"> Male<BR>
+	    <INPUT type="radio" name="sex" value="Female"> Female<BR>
+	    <INPUT type="submit" value="Send"> <INPUT type="reset">
+	    </P>
+	 </FORM>	
+		
+	</body>
+
+</html>

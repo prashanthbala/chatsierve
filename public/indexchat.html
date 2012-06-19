@@ -1,0 +1,61 @@
+<html>
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="chatstyle.css" />
+		
+		<title>SOCKETS TEST CHATROOM</title>
+	</head>
+	
+	<body id="index">
+		
+		<div>
+		    <p>
+                <label for="messageText">Message</label>
+                <input type="text" id="messageText"/>
+            </p>
+        </div>
+        
+		<div>
+	            <ul id="messages">
+	            </ul>
+        </div>
+
+		
+		<script src="/socket.io/socket.io.js" type="text/javascript">
+		</script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js">
+		</script>
+		<script type="text/javascript">
+			var socket = io.connect('http://192.168.1.76:9231');
+			var now = new Date();
+			
+			socket.on('connect', function(){
+				$('#messages').append('<li>Connected to the server.</li>');
+			});
+			
+			socket.on('disconnect', function(){
+				$('#messages').append('<li>Disconnected from the server.</li>');
+			});
+			
+			socket.on('message', function(message){
+				$('#messages')
+				.append('<li>' + now.toTimeString() + ' - ' + message + '</li>');
+			});
+			
+			
+			$('#messageText').keydown(function (event) {
+				if(event.which == 13) {
+					var message = $('#messageText').val();
+		            socket.emit('message', message);
+					$('#messages')
+					.append('<li>' + now.toTimeString() + ' - ' + message + '</li>');
+		            $('#messageText').val('');
+				}
+			});
+			
+		</script>
+		
+	</body>
+
+</html>
